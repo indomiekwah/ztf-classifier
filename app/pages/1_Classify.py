@@ -12,7 +12,7 @@ from alerce_classifier.preprocessing.pipeline import prepare_detection_frame
 from alerce_classifier.clients.tap import AlerceTapClient
 
 
-ROOT = Path(__file__).resolve().parents[1]
+ROOT = Path(__file__).resolve().parents[2]
 ARTIFACT_DIR = ROOT / "artifacts"
 LABELS_PATH = ROOT / "labeled_set_lc_classifier_SanchezSaez_2020.csv"
 LANDING_IMAGE = ROOT / "app" / "assets" / "landing_page.png"
