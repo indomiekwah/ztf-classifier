@@ -1,0 +1,16 @@
+# Python cache
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.venv/
+.ipynb_checkpoints/
+
+data/
+
+labeled_set_lc_classifier_SanchezSaez_2020.csv
+
+# Local model outputs and packaging metadata
+*.egg-info/
+artifacts/*.pt

@@ -1,0 +1,17 @@
+{
+  "features": [
+    "time_rel",
+    "delta_time",
+    "magnitude",
+    "magnitude_error",
+    "flux_log",
+    "flux_error",
+    "delta_magnitude",
+    "local_slope",
+    "log_snr",
+    "filter_g",
+    "filter_r"
+  ],
+  "max_length": 1088,
+  "quantile": 0.95
+}
