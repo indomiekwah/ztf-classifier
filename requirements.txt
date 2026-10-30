@@ -1,0 +1,2 @@
+# For streamlit deployment
+-e .[app]
