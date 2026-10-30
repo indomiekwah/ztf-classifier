@@ -12,8 +12,6 @@ from sklearn.metrics import accuracy_score, balanced_accuracy_score, classificat
 from torch import nn
 from torch.utils.data import DataLoader, TensorDataset
 
-from ..models.hybrid_cnn_gru import CNNClassifier, GRUClassifier, HybridCNNGRU
-
 CLASS_NAMES = ("Periodic", "Stochastic", "Transient")
 
 

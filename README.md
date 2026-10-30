@@ -46,7 +46,7 @@ ztf-classifier/
 ```
 
 `data/` berisi dataset lokal dan tidak dimaksudkan untuk di-commit. Checkpoint
-besar juga sebaiknya disimpan menggunakan penyimpanan artifact eksternal.
+yang diperlukan aplikasi berada di `artifacts/`.
 
 ## Instalasi
 
@@ -94,13 +94,13 @@ from alerce_classifier.training.loop import train_model
 
 ## Akuisisi data
 
-Data diperoleh menggunakan **Fornax Science Console** dan
-`fornax_data_acquisition`. Untuk menjalankan akuisisi melalui Terminal Fornax,
-siapkan:
+Data diperoleh menggunakan **Fornax Science Console**. Pengguna Fornax tidak
+perlu memasang package repository ini. Setelah repository di-download atau
+di-clone, salin file berikut ke satu folder kerja di Fornax:
 
-- `fornax_data_acquisition.py`;
-- `environment.yml`;
+- `src/alerce_classifier/training/fornax_data_acquisition.py`;
 - `labeled_set_lc_classifier_SanchezSaez_2020.csv`.
+- `environment.yml` jika ingin membuat environment sendiri.
 
 Gunakan environment Fornax yang telah tersedia:
 
@@ -108,9 +108,31 @@ Gunakan environment Fornax yang telah tersedia:
 py-light_curve_collector
 ```
 
-Simpan output penting pada home directory persisten, bukan pada lokasi scratch
-yang dapat kedaluwarsa. Perintah Conda dijalankan dari Terminal Fornax pada
-folder yang berisi ketiga file tersebut.
+Aktifkan environment `py-light_curve_collector`, buka Terminal Fornax pada
+folder yang berisi file tersebut, lalu jalankan script sebagai file Python
+biasa. Simpan output penting pada home directory persisten, bukan pada lokasi
+scratch yang dapat kedaluwarsa.
+
+Contoh menjalankan akuisisi dari folder kerja Fornax:
+
+```bash
+python fornax_data_acquisition.py \
+  --per-subclass 2 \
+  --output data/smoke
+```
+
+Jika repository dipasang secara editable di environment lokal, perintah module
+berikut juga dapat digunakan:
+
+```powershell
+python -m alerce_classifier.training.fornax_data_acquisition `
+  --per-subclass 2 `
+  --output data\smoke
+```
+
+`environment.yml` dan `fornax_merge.py` yang mungkin digunakan pada workflow
+Fornax sebelumnya bukan bagian dari repository ini. Jika workflow tersebut
+memerlukannya, sediakan file tersebut secara terpisah.
 
 ## Preprocessing dan training
 
