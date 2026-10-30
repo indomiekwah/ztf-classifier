@@ -11,4 +11,3 @@ data/
 
 # Local model outputs and packaging metadata
 *.egg-info/
-artifacts/*.pt
