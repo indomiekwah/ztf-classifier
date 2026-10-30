@@ -39,6 +39,9 @@ ztf-classifier/
 │   ├── scripts/             # script training tambahan
 │   └── tests/               # test training
 ├── app/                     # aplikasi Streamlit
+│   ├── assets/              # gambar landing page dan credit-nya
+│   ├── app.py               # halaman Classify object
+│   └── pages/               # Result of the research dan About
 ├── data/                    # dataset lokal
 ├── artifacts/               # konfigurasi, hasil eksperimen, dan checkpoint
 ├── pyproject.toml
@@ -81,6 +84,20 @@ directory.
 ```powershell
 streamlit run app\app.py
 ```
+
+Landing page menyediakan randomisasi OID dari
+`labeled_set_lc_classifier_SanchezSaez_2020.csv`. Daftar OID dibaca sekali dan
+disimpan di cache, sehingga tombol Randomize tidak perlu melakukan query TAP
+dan tetap cepat. Query ke ALeRCE baru dilakukan setelah pengguna menekan
+Classify.
+
+Jika ingin menambahkan gambar landing page, simpan gambar di:
+
+```text
+app/assets/landing_page.png
+```
+
+Tambahkan sumber dan credit gambar tersebut di halaman About.
 
 Aplikasi menggunakan checkpoint Hybrid CNN-GRU derived seed 42 dan pipeline
 inference yang sama dengan pipeline training. Setelah environment `alerce-app`

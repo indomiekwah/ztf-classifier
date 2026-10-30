@@ -10,7 +10,7 @@ import streamlit as st
 ROOT = Path(__file__).resolve().parents[2]
 RESULTS = ROOT / "artifacts" / "derived_experiment_results.json"
 
-st.set_page_config(page_title="Hasil Penelitian", page_icon="📊", layout="wide")
+st.set_page_config(page_title="Result of the research", page_icon="Z", layout="wide")
 st.title("Hasil Penelitian")
 st.caption("Ringkasan eksperimen feature engineering dan early classification seed 42")
 
