@@ -50,10 +50,26 @@ yang diperlukan aplikasi berada di `artifacts/`.
 
 ## Instalasi
 
-Dari root repository, jalankan:
+Repository ini menggunakan **Conda untuk membuat environment** dan **pip untuk
+memasang package Python**. Pip dijalankan setelah environment Conda aktif.
+
+Untuk instalasi lokal lengkap:
 
 ```powershell
+conda create -n alerce-dev python=3.10 -y
+conda activate alerce-dev
 python -m pip install -e ".[dev,training,app]"
+```
+
+Perintah `python -m pip install -e ".[dev,training,app]"` memasang repository
+secara editable beserta dependency development, training, dan Streamlit.
+
+Untuk environment deployment yang hanya menjalankan aplikasi:
+
+```powershell
+conda create -n alerce-app python=3.10 -y
+conda activate alerce-app
+python -m pip install -e ".[app]"
 ```
 
 Instalasi editable membuat package `alerce_classifier` dapat digunakan oleh
@@ -67,11 +83,10 @@ streamlit run app\app.py
 ```
 
 Aplikasi menggunakan checkpoint Hybrid CNN-GRU derived seed 42 dan pipeline
-inference yang sama dengan pipeline training. Untuk menjalankan aplikasi
-produksi/deployment, gunakan environment yang hanya memasang extra `app`:
+inference yang sama dengan pipeline training. Setelah environment `alerce-app`
+aktif, jalankan:
 
 ```powershell
-python -m pip install -e ".[app]"
 streamlit run app\app.py
 ```
 
@@ -95,18 +110,14 @@ from alerce_classifier.training.loop import train_model
 ## Akuisisi data
 
 Data diperoleh menggunakan **Fornax Science Console**. Pengguna Fornax tidak
-perlu memasang package repository ini. Setelah repository di-download atau
+perlu memasang package repository ini atau membuat environment baru. Gunakan
+environment Fornax yang telah tersedia, yaitu `py-light_curve_collector`.
+Setelah repository di-download atau
 di-clone, salin file berikut ke satu folder kerja di Fornax:
 
 - `src/alerce_classifier/training/fornax_data_acquisition.py`;
 - `labeled_set_lc_classifier_SanchezSaez_2020.csv`.
 - `environment.yml` jika ingin membuat environment sendiri.
-
-Gunakan environment Fornax yang telah tersedia:
-
-```text
-py-light_curve_collector
-```
 
 Aktifkan environment `py-light_curve_collector`, buka Terminal Fornax pada
 folder yang berisi file tersebut, lalu jalankan script sebagai file Python
