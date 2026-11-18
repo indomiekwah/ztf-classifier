@@ -12,8 +12,7 @@ import pandas as pd
 import torch
 
 from ..preprocessing.pipeline import (
-    DERIVED_FEATURE_COLUMNS,
-    add_derived_sequence_features,
+    FEATURE_COLUMNS,
     make_padded_sequences,
     prepare_detection_frame,
 )
@@ -40,9 +39,9 @@ class LightCurveInference:
         self.normalization = self._load_json(config.normalization_path)
         feature_config = self._load_json(config.feature_config_path)
         self.features = tuple(feature_config["features"])
-        if self.features != tuple(DERIVED_FEATURE_COLUMNS):
+        if self.features != tuple(FEATURE_COLUMNS):
             raise ValueError(
-                "Feature order konfigurasi tidak sesuai dengan derived feature pipeline"
+                "Feature order konfigurasi tidak sesuai dengan raw feature pipeline"
             )
         self.max_length = int(feature_config["max_length"])
         self.model = HybridCNNGRU(feature_count=len(self.features))
@@ -69,13 +68,12 @@ class LightCurveInference:
         if missing:
             raise ValueError(f"Kolom detection tidak lengkap: {sorted(missing)}")
         prepared = prepare_detection_frame(detections.copy())
-        prepared = add_derived_sequence_features(prepared)
         if prepared.empty:
             raise ValueError("Tidak ada detection valid setelah preprocessing")
         for feature in self.features:
             stats = self.normalization.get(feature)
             if not stats:
-                raise ValueError(f"Normalisasi tidak tersedia untuk fitur {feature}")
+                continue
             std = float(stats["std"])
             if not np.isfinite(std) or std <= 0:
                 raise ValueError(f"Standard deviation tidak valid untuk fitur {feature}")

@@ -99,7 +99,7 @@ app/assets/landing_page.png
 
 Tambahkan sumber dan credit gambar tersebut di halaman About.
 
-Aplikasi menggunakan checkpoint Hybrid CNN-GRU derived seed 42 dan pipeline
+Aplikasi menggunakan checkpoint Hybrid CNN-GRU raw seed 42 dan pipeline
 inference yang sama dengan pipeline training. Setelah environment `alerce-app`
 aktif, jalankan:
 
@@ -166,8 +166,8 @@ memerlukannya, sediakan file tersebut secara terpisah.
 
 Preprocessing dan training dilakukan melalui package `src/alerce_classifier`, lalu dapat direview melalui notebook di `training/notebooks/`. Dengan pendekatan ini, perubahan preprocessing dan training dapat dievaluasi dan digunakan kembali secara langsung oleh aplikasi.
 
-Model inference yang digunakan aplikasi adalah Hybrid CNN-GRU dengan derived
-sequential features.
+Model inference yang digunakan aplikasi adalah Hybrid CNN-GRU dengan enam
+fitur observasi mentah per deteksi.
 
 ## Acknowledgement
 

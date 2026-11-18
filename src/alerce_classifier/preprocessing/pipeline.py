@@ -34,37 +34,6 @@ FEATURE_COLUMNS = [
     "filter_g",
     "filter_r",
 ]
-DERIVED_FEATURE_COLUMNS = [
-    *FEATURE_COLUMNS[:4],
-    "flux_log",
-    "flux_error",
-    "delta_magnitude",
-    "local_slope",
-    "log_snr",
-    *FEATURE_COLUMNS[4:],
-]
-
-
-def add_derived_sequence_features(
-    prepared: pd.DataFrame,
-    slope_epsilon: float = 1e-6,
-) -> pd.DataFrame:
-    """Add per-detection photometric features without using future observations."""
-    if slope_epsilon <= 0:
-        raise ValueError("slope_epsilon harus positif")
-    result = prepared.copy()
-    result["flux_log"] = -0.4 * result["magnitude"]
-    flux = np.power(10.0, result["flux_log"])
-    result["flux_error"] = 0.4 * np.log(10.0) * flux * result["magnitude_error"]
-    result["delta_magnitude"] = (
-        result.groupby("oid")["magnitude"].diff().fillna(0.0)
-    )
-    result["local_slope"] = result["delta_magnitude"] / result["delta_time"].clip(
-        lower=slope_epsilon
-    )
-    snr = 1.0 / (0.4 * np.log(10.0) * result["magnitude_error"].clip(lower=slope_epsilon))
-    result["log_snr"] = np.log1p(snr)
-    return result
 
 
 def load_labels(path: Path) -> pd.DataFrame:

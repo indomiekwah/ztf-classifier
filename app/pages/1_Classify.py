@@ -21,8 +21,8 @@ LANDING_IMAGE = ROOT / "app" / "assets" / "landing_page.png"
 def load_inference() -> LightCurveInference:
     return LightCurveInference(
         InferenceConfig(
-            checkpoint_path=ARTIFACT_DIR / "derived_hybrid_cnn_gru_seed42_best.pt",
-            normalization_path=ARTIFACT_DIR / "derived_normalization.json",
+            checkpoint_path=ARTIFACT_DIR / "hybrid" / "hybrid_cnn_gru_seed42_best.pt",
+            normalization_path=ARTIFACT_DIR / "normalization.json",
             feature_config_path=ARTIFACT_DIR / "feature_config.json",
         )
     )
