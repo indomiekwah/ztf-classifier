@@ -305,11 +305,7 @@ def show_stamps(oid: str, detections: pd.DataFrame) -> None:
 
 
 def render_result(result: dict) -> None:
-    mode_label = {
-        "full": "Full Sequence",
-        "early": "Early Classification dengan 6 detection",
-        "early_fallback": "Fallback Full Sequence",
-    }.get(str(result["mode"]), "Full Sequence")
+    mode_label = "Full Sequence" if result["mode"] == "full" else "Early Classification dengan 6 detection"
     probability_rows = ""
     for class_name, probability in result["probabilities"].items():
         percentage = float(probability) * 100
@@ -577,17 +573,16 @@ def main() -> None:
             "ALeRCE BRF, tetapi proses inferensi Hybrid 1D-CNN + GRU tetap dilanjutkan."
         )
     early_count = 6 if mode == "early" and len(display_detections) >= 6 else None
-    inference_mode = mode
-    if mode == "early" and len(display_detections) < 6:
-        inference_mode = "full"
     try:
         inference = load_inference()
-        result = inference.predict(valid, mode=inference_mode)
-        if mode == "early" and len(display_detections) < 6:
-            result["mode"] = "early_fallback"
+        result = inference.predict(valid, mode=mode)
     except ValueError as exc:
-        st.error(f"Inference tidak dapat dijalankan: {exc}")
-        return
+        if mode == "early" and len(valid) < 6:
+            st.warning("Early classification tidak tersedia: objek memiliki kurang dari 6 detection valid.")
+            result = None
+        else:
+            st.error(f"Inference tidak dapat dijalankan: {exc}")
+            return
     except Exception as exc:
         st.error(f"Model atau preprocessing gagal: {exc}")
         return
