@@ -8,7 +8,15 @@ from typing import Iterable
 
 import numpy as np
 import torch
-from sklearn.metrics import accuracy_score, balanced_accuracy_score, classification_report, confusion_matrix, f1_score
+from sklearn.metrics import (
+    accuracy_score,
+    balanced_accuracy_score,
+    classification_report,
+    confusion_matrix,
+    f1_score,
+    precision_score,
+    recall_score,
+)
 from torch import nn
 from torch.utils.data import DataLoader, TensorDataset
 
@@ -78,6 +86,12 @@ def evaluate(
     metrics = {
         "accuracy": float(accuracy_score(actual, predicted)),
         "balanced_accuracy": float(balanced_accuracy_score(actual, predicted)),
+        "macro_precision": float(
+            precision_score(actual, predicted, average="macro", zero_division=0)
+        ),
+        "macro_recall": float(
+            recall_score(actual, predicted, average="macro", zero_division=0)
+        ),
         "macro_f1": float(f1_score(actual, predicted, average="macro", zero_division=0)),
         "classification_report": classification_report(
             actual, predicted, labels=range(len(CLASS_NAMES)),
@@ -187,4 +201,52 @@ def evaluate_prefixes(
         results[str(fraction)] = evaluate(
             model, make_loader(prefix_x, prefix_mask, y, batch_size=64), device
         )
+    return results
+
+
+def evaluate_detection_prefixes(
+    model: nn.Module,
+    x: torch.Tensor,
+    mask: torch.Tensor,
+    y: torch.Tensor,
+    detection_counts: Iterable[int | None],
+    device: torch.device,
+) -> dict[str, dict]:
+    """Evaluate chronological prefixes defined by an absolute detection count."""
+    results: dict[str, dict] = {}
+    lengths = mask.sum(dim=1).to(torch.long)
+
+    for detection_count in detection_counts:
+        if detection_count is None:
+            selected = torch.ones(x.shape[0], dtype=torch.bool)
+            prefix_key = "all"
+            effective_count = None
+        else:
+            selected = lengths >= int(detection_count)
+            prefix_key = str(detection_count)
+            effective_count = int(detection_count)
+
+        prefix_x = x[selected].clone()
+        prefix_mask = mask[selected].clone()
+
+        if effective_count is not None:
+            positions = torch.arange(prefix_x.shape[1], device=prefix_x.device).unsqueeze(0)
+            prefix_mask = (positions < effective_count).float() * prefix_mask
+            prefix_x = prefix_x * prefix_mask.unsqueeze(-1)
+
+        metrics = evaluate(
+            model,
+            make_loader(prefix_x, prefix_mask, y[selected], batch_size=64),
+            device,
+        )
+        metrics.update(
+            {
+                "detection_count": effective_count,
+                "valid_object_count": int(selected.sum().item()),
+                "total_object_count": int(x.shape[0]),
+                "coverage": float(selected.float().mean().item()),
+            }
+        )
+        results[prefix_key] = metrics
+
     return results
