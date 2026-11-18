@@ -41,7 +41,10 @@ class LightCurveInference:
         self.features = tuple(feature_config["features"])
         if self.features != tuple(FEATURE_COLUMNS):
             raise ValueError(
-                "Feature order konfigurasi tidak sesuai dengan raw feature pipeline"
+                "Feature order/config tidak sesuai dengan raw feature pipeline. "
+                f"pipeline={tuple(FEATURE_COLUMNS)!r}; "
+                f"config={self.features!r}; "
+                f"feature_config={str(config.feature_config_path)!r}"
             )
         self.max_length = int(feature_config["max_length"])
         self.model = HybridCNNGRU(feature_count=len(self.features))
