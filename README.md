@@ -43,13 +43,16 @@ ztf-classifier/
 │   ├── app.py               # halaman Classify object
 │   └── pages/               # Result of the research dan About
 ├── data/                    # dataset lokal
-├── artifacts/               # konfigurasi, hasil eksperimen, dan checkpoint
+├── artifacts/               # konfigurasi, checkpoint, dan hasil evaluasi
+│   ├── models/              # checkpoint CNN dan GRU
+│   └── evaluation/          # training, early classification, benchmark
 ├── pyproject.toml
 └── README.md
 ```
 
 `data/` berisi dataset lokal dan tidak dimaksudkan untuk di-commit. Checkpoint
-yang diperlukan aplikasi berada di `artifacts/`.
+Hybrid CNN-GRU yang diperlukan aplikasi berada langsung di `artifacts/`;
+checkpoint CNN dan GRU untuk benchmark berada di `artifacts/models/`.
 
 ## Instalasi
 
@@ -168,6 +171,58 @@ Preprocessing dan training dilakukan melalui package `src/alerce_classifier`, la
 
 Model inference yang digunakan aplikasi adalah Hybrid CNN-GRU dengan derived
 sequential features.
+
+## Training
+
+Eksperimen utama menggunakan pembagian berbasis OID sebesar **70% training,
+15% validation, dan 15% test** dengan stratifikasi `classMacro`. Seluruh
+eksperimen menggunakan **random seed 42** untuk menjaga konsistensi dan
+reproduktibilitas. Penggunaan satu seed menjadi salah satu keterbatasan
+penelitian.
+
+Pipeline menggunakan fitur mentah dan fitur turunan deterministik. Urutan 11
+fitur yang digunakan model adalah:
+
+1. `time_rel`
+2. `delta_time`
+3. `magnitude`
+4. `magnitude_error`
+5. `flux_log`
+6. `flux_error`
+7. `delta_magnitude`
+8. `local_slope`
+9. `log_snr`
+10. `filter_g`
+11. `filter_r`
+
+Statistik standardisasi setiap fitur dihitung hanya dari detection milik OID
+training, kemudian digunakan tanpa refit pada validation dan test.
+
+Metrik yang dilaporkan untuk CNN, GRU, dan Hybrid CNN-GRU adalah
+Macro-precision, Macro-recall, Macro-F1, balanced accuracy, dan accuracy.
+Model utama dipilih berdasarkan Macro-F1 validation; test set hanya digunakan
+satu kali untuk pelaporan hasil akhir.
+
+Early classification utama menggunakan **evaluasi prefix temporal berbasis
+jumlah detection** pada 6, 10, 15, 20, 30, dan seluruh detection valid.
+Objek yang tidak memiliki detection minimum dikeluarkan dari threshold tersebut
+dan jumlah objek valid serta coverage dilaporkan. Evaluasi berbasis persentase
+25%, 50%, 75%, dan 100% hanya merupakan analisis tambahan.
+
+```powershell
+jupyter notebook training\notebooks\benchmark_experiment.ipynb
+```
+
+Notebook tersebut menjalankan setiap tahap benchmark secara terpisah dan
+menampilkan tabel metrik, efisiensi, serta evaluasi prefix sebelum menyimpan
+artifact JSON.
+
+
+Benchmark memakai device dan batch size yang sama untuk seluruh model serta
+mencatat jumlah parameter, waktu inferensi, peak memory device, ukuran
+checkpoint, dan waktu training yang disimpan oleh `train_model`. Jika BRF
+tidak dilatih ulang pada dataset ini, BRF diperlakukan sebagai baseline
+eksternal dan hanya dibandingkan pada metrik yang tersedia di publikasinya.
 
 ## Acknowledgement
 
