@@ -1,0 +1,239 @@
+{
+  "hybrid_cnn_gru": {
+    "protocol": {
+      "feature_set": "raw",
+      "seed": 42,
+      "batch_size": 64,
+      "device": "cuda"
+    },
+    "selection": {
+      "best_epoch": 27,
+      "best_validation_macro_f1": 0.969654492719274,
+      "stopped_epoch": 34,
+      "training_seconds": 2884.2890974999173
+    },
+    "test": {
+      "accuracy": 0.9739811066126856,
+      "balanced_accuracy": 0.9681005635423365,
+      "macro_precision": 0.9686384274223968,
+      "macro_recall": 0.9681005635423365,
+      "macro_f1": 0.9683548393723816,
+      "classification_report": {
+        "Periodic": {
+          "precision": 0.984009840098401,
+          "recall": 0.9800918836140888,
+          "f1-score": 0.9820469541199939,
+          "support": 13060.0
+        },
+        "Stochastic": {
+          "precision": 0.9492491921687892,
+          "recall": 0.9590935279431535,
+          "f1-score": 0.9541459686664119,
+          "support": 5207.0
+        },
+        "Transient": {
+          "precision": 0.97265625,
+          "recall": 0.9651162790697675,
+          "f1-score": 0.9688715953307393,
+          "support": 258.0
+        },
+        "accuracy": 0.9739811066126856,
+        "macro avg": {
+          "precision": 0.9686384274223968,
+          "recall": 0.9681005635423365,
+          "f1-score": 0.9683548393723816,
+          "support": 18525.0
+        },
+        "weighted avg": {
+          "precision": 0.9740812074390285,
+          "recall": 0.9739811066126856,
+          "f1-score": 0.974021060796138,
+          "support": 18525.0
+        }
+      },
+      "confusion_matrix": [
+        [
+          12800,
+          259,
+          1
+        ],
+        [
+          207,
+          4994,
+          6
+        ],
+        [
+          1,
+          8,
+          249
+        ]
+      ]
+    },
+    "benchmark": {
+      "inference_seconds": 6.180068699992262,
+      "inference_seconds_per_object": 0.00033360694736800334,
+      "peak_memory_bytes": 69474304.0,
+      "object_count": 18525.0,
+      "trainable_parameters": 25155,
+      "checkpoint_size_bytes": 105141
+    }
+  },
+  "cnn": {
+    "protocol": {
+      "feature_set": "raw",
+      "seed": 42,
+      "batch_size": 64,
+      "device": "cuda"
+    },
+    "selection": {
+      "best_epoch": 21,
+      "best_validation_macro_f1": 0.952757844210077,
+      "stopped_epoch": 28,
+      "training_seconds": 71.72771260002628
+    },
+    "test": {
+      "accuracy": 0.9622132253711201,
+      "balanced_accuracy": 0.9471121659888975,
+      "macro_precision": 0.9524596347419251,
+      "macro_recall": 0.9471121659888975,
+      "macro_f1": 0.9493508894978219,
+      "classification_report": {
+        "Periodic": {
+          "precision": 0.9625065352154754,
+          "recall": 0.9867534456355284,
+          "f1-score": 0.9744791863586525,
+          "support": 13060.0
+        },
+        "Stochastic": {
+          "precision": 0.9630541871921182,
+          "recall": 0.901094680238141,
+          "f1-score": 0.9310447465026293,
+          "support": 5207.0
+        },
+        "Transient": {
+          "precision": 0.9318181818181818,
+          "recall": 0.9534883720930233,
+          "f1-score": 0.9425287356321839,
+          "support": 258.0
+        },
+        "accuracy": 0.9622132253711201,
+        "macro avg": {
+          "precision": 0.9524596347419251,
+          "recall": 0.9471121659888975,
+          "f1-score": 0.9493508894978219,
+          "support": 18525.0
+        },
+        "weighted avg": {
+          "precision": 0.9622330684767914,
+          "recall": 0.9622132253711201,
+          "f1-score": 0.9618256724791523,
+          "support": 18525.0
+        }
+      },
+      "confusion_matrix": [
+        [
+          12887,
+          170,
+          3
+        ],
+        [
+          500,
+          4692,
+          15
+        ],
+        [
+          2,
+          10,
+          246
+        ]
+      ]
+    },
+    "benchmark": {
+      "inference_seconds": 0.2466439000563696,
+      "inference_seconds_per_object": 1.331411066431145e-05,
+      "peak_memory_bytes": 56278528.0,
+      "object_count": 18525.0,
+      "trainable_parameters": 6243,
+      "checkpoint_size_bytes": 28149
+    }
+  },
+  "gru": {
+    "protocol": {
+      "feature_set": "raw",
+      "seed": 42,
+      "batch_size": 64,
+      "device": "cuda"
+    },
+    "selection": {
+      "best_epoch": 24,
+      "best_validation_macro_f1": 0.9687219735305644,
+      "stopped_epoch": 31,
+      "training_seconds": 2223.710017299978
+    },
+    "test": {
+      "accuracy": 0.9760323886639676,
+      "balanced_accuracy": 0.9692168029636953,
+      "macro_precision": 0.9683523743811011,
+      "macro_recall": 0.9692168029636953,
+      "macro_f1": 0.9687253499069644,
+      "classification_report": {
+        "Periodic": {
+          "precision": 0.9797933758735946,
+          "recall": 0.9875957120980092,
+          "f1-score": 0.9836790726052471,
+          "support": 13060.0
+        },
+        "Stochastic": {
+          "precision": 0.9672484800941361,
+          "recall": 0.9471864797388131,
+          "f1-score": 0.9571123617310304,
+          "support": 5207.0
+        },
+        "Transient": {
+          "precision": 0.9580152671755725,
+          "recall": 0.9728682170542635,
+          "f1-score": 0.9653846153846154,
+          "support": 258.0
+        },
+        "accuracy": 0.9760323886639676,
+        "macro avg": {
+          "precision": 0.9683523743811011,
+          "recall": 0.9692168029636953,
+          "f1-score": 0.9687253499069644,
+          "support": 18525.0
+        },
+        "weighted avg": {
+          "precision": 0.9759639548550937,
+          "recall": 0.9760323886639676,
+          "f1-score": 0.9759569223496481,
+          "support": 18525.0
+        }
+      },
+      "confusion_matrix": [
+        [
+          12898,
+          162,
+          0
+        ],
+        [
+          264,
+          4932,
+          11
+        ],
+        [
+          2,
+          5,
+          251
+        ]
+      ]
+    },
+    "benchmark": {
+      "inference_seconds": 6.0940126000205055,
+      "inference_seconds_per_object": 0.00032896154386075603,
+      "peak_memory_bytes": 55442944.0,
+      "object_count": 18525.0,
+      "trainable_parameters": 14019,
+      "checkpoint_size_bytes": 59253
+    }
+  }
+}

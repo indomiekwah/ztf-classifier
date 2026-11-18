@@ -1,0 +1,56 @@
+{
+  "6": {
+    "detection_count": 6,
+    "valid_object_count": 18525,
+    "coverage": 1.0,
+    "inference_seconds": 0.3535943999886513,
+    "inference_seconds_per_object": 1.9087417003435965e-05,
+    "peak_memory_bytes": 20815872.0,
+    "object_count": 18525.0
+  },
+  "10": {
+    "detection_count": 10,
+    "valid_object_count": 18469,
+    "coverage": 0.9969770312309265,
+    "inference_seconds": 0.3731555000413209,
+    "inference_seconds_per_object": 2.020442363102068e-05,
+    "peak_memory_bytes": 20958208.0,
+    "object_count": 18469.0
+  },
+  "15": {
+    "detection_count": 15,
+    "valid_object_count": 18294,
+    "coverage": 0.9875303506851196,
+    "inference_seconds": 0.3938442000653595,
+    "inference_seconds_per_object": 2.1528599544405788e-05,
+    "peak_memory_bytes": 21293568.0,
+    "object_count": 18294.0
+  },
+  "20": {
+    "detection_count": 20,
+    "valid_object_count": 18107,
+    "coverage": 0.9774358868598938,
+    "inference_seconds": 0.39032689994201064,
+    "inference_seconds_per_object": 2.1556685256641664e-05,
+    "peak_memory_bytes": 21628928.0,
+    "object_count": 18107.0
+  },
+  "30": {
+    "detection_count": 30,
+    "valid_object_count": 17776,
+    "coverage": 0.9595681428909302,
+    "inference_seconds": 0.43112230009865016,
+    "inference_seconds_per_object": 2.4253054686017673e-05,
+    "peak_memory_bytes": 22299648.0,
+    "object_count": 17776.0
+  },
+  "all": {
+    "detection_count": null,
+    "valid_object_count": 18525,
+    "coverage": 1.0,
+    "inference_seconds": 6.314339900040068,
+    "inference_seconds_per_object": 0.0003408550553327972,
+    "peak_memory_bytes": 46598144.0,
+    "object_count": 18525.0
+  }
+}
